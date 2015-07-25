@@ -1,1 +1,1 @@
-export loadInfo from './loadInfo';
+export loadCampaign from './loadCampaign';

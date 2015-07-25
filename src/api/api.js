@@ -3,8 +3,18 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import config from '../config';
 import * as actions from './routes/index';
+import mongo from 'mongodb';
+import monk from 'monk';
+
+const db = monk('localhost:27017/simpledashboard');
 
 const app = express();
+
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+
 app.use(session({
   secret: 'anujan testing 123',
   resave: false,

@@ -1,5 +1,22 @@
-.app {
+* {
+  box-sizing: border-box;
 }
-.app-content {
-  color: blue;
+.app {
+  padding: 10px;
+}
+
+.campaignSelection {
+  margin-left: 0;
+
+  li {
+    display: inline-block;
+    border: 1px solid #dadada;
+    cursor: pointer;
+    padding: 6px 12px;
+    &:hover {
+      background-color:: #dadada;
+      color: #fff
+    }
+    list-style: none;
+  }
 }

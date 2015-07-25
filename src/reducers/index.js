@@ -1,1 +1,1 @@
-export info from './info';
+export campaigns from './campaign';

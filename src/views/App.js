@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {isLoaded as isInfoLoaded} from '../reducers/info';
-import {load as loadInfo} from '../actions/infoActions';
+import {isLoaded as isCampaignLoaded} from '../reducers/campaign';
+import * as campaignActions from '../actions/campaignActions';
+import {load as loadCampaign} from '../actions/campaignActions';
 import {createTransitionHook} from '../universalRouter';
-import InfoBar from '../components/InfoBar';
 
 if (__CLIENT__) {
   require('./App.scss');
@@ -35,7 +35,6 @@ class App extends Component {
   render() {
     return (
       <div className="container app">
-        <InfoBar />
         <div className="app-content">
           {this.props.children}
         </div>
@@ -44,7 +43,7 @@ class App extends Component {
   }
 }
 
-@connect(state => ({}))
+@connect(state => ({ campaigns: state.campaigns }))
 export default
 class AppContainer {
   static propTypes = {
@@ -53,15 +52,15 @@ class AppContainer {
 
   static fetchData(store) {
     const promises = [];
-    if (!isInfoLoaded(store.getState())) {
-      promises.push(store.dispatch(loadInfo()));
+    if (!isCampaignLoaded(store.getState())) {
+      promises.push(store.dispatch(loadCampaign()));
     }
     return Promise.all(promises);
   }
 
   render() {
-    const { dispatch } = this.props;
-    return <App>
+    const { campaigns, dispatch } = this.props;
+    return <App campaigns={campaigns} {...bindActionCreators(campaignActions, dispatch)}>
       {this.props.children}
     </App>;
   }
